@@ -1,0 +1,8 @@
+/var/log/remote/*.log {
+  rotate 12
+  monthly
+  maxsize 10M
+  compress
+  missingok
+  notifempty
+}
