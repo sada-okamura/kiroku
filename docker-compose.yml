@@ -1,0 +1,21 @@
+version: "2.4"
+# volumes:
+#     kiroku:
+
+services:
+    kiroku:
+        build:
+            context: rsyslog
+        # volumes:
+        #     - kiroku:/var/log
+        restart: "unless-stopped"
+    api:
+        build:
+            context: app
+        environment:
+            REMOTE_LOGGING_ENABLED: "true"
+            REMOTE_LOGGING_HOST: kiroku
+        ports:
+            - 8000:8000
+        restart: "unless-stopped"
+
