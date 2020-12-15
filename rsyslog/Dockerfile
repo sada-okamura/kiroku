@@ -1,5 +1,5 @@
 FROM alpine:3.12.2
-MAINTAINER sadanori.okamura@freestyleiot.com
+MAINTAINER sada.okamura@gmail.com
 
 RUN apk --update add --no-cache rsyslog logrotate sudo
 
@@ -8,9 +8,6 @@ COPY rsyslog.d /etc/rsyslog.d
 
 COPY logrotate.d /etc/logrotate.d
 COPY logrotate.sh /etc/periodic/hourly/
-# don't let logrotate complain about missing file
-#RUN touch /var/log/messages
-
 
 RUN mkdir /code
 WORKDIR /code
@@ -22,9 +19,6 @@ RUN	adduser -s /bin/ash -D rsyslog rsyslog \
     && mkdir /syslog \
     && chown -R rsyslog:adm /syslog \
     && chown -R rsyslog:adm /var/log
-
-#USER rsyslog
-
 
 CMD ["/usr/sbin/rsyslogd", "-n"]
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
